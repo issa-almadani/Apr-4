@@ -1,4 +1,39 @@
 <h1>Super Rad Net Art</h1>
 <h2>by Issa</h2>
+<button>
+  start
+</button>
   
 <script src="https://tonejs.github.io/build/Tone.js"></script>
+<script>
+	// chord: series of notes played at same time
+  // arpeggio: same notes played not at the same time
+  // sequencer plays list of notes in certain beat / sequence of time
+  
+  let i = 0
+  
+  const notes = ['C4', 'E4', 'G4', 'C5', 'E5', 'G5']
+  
+  function play(time){
+    // multiple instruments exist in tone.js => documentation
+    // instrument Synth, toDest. sends to output (speakers)
+    // code won't play without permission out of netnet
+    const synth = new Tone.Synth().toDestination()
+    synth.triggerAttackRelease(notes[i%(notes.length)], "8n")
+    i++;
+  }
+  
+  function start(){
+    // we can pass an anoynymous function by function () {} or () => {}
+    // automatically passes in time, which we can access if we add the input
+    // function (time) {console.log(time)} 
+    
+    Tone.Transport.scheduleRepeat(play, '8n') // the 8n here tells us when to schedule the playback
+    Tone.Transport.bpm.value = 180 // how many quarters are played each minute
+    Tone.Transport.start()
+  }
+  
+  const button = document.querySelector('button');
+  button.addEventListener('click', start)
+
+</script>
